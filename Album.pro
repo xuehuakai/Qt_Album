@@ -56,3 +56,5 @@ RESOURCES += \
     rc.qrc
 
 RC_ICONS  = "icon/bulm.ico"
+
+#git测试语句
