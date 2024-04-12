@@ -83,8 +83,20 @@
         </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="previousBtn">
+         <widget class="PicButton" name="previousBtn">
           <property name="text">
            <string/>
           </property>
@@ -108,8 +120,20 @@
         </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="nextBtn">
+         <widget class="PicButton" name="nextBtn">
           <property name="text">
            <string/>
           </property>
@@ -121,7 +145,7 @@
      <item row="1" column="2">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -129,6 +153,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PicButton</class>
+   <extends>QPushButton</extends>
+   <header>picbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

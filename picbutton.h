@@ -6,7 +6,20 @@
 class PicButton : public QPushButton
 {
 public:
-    PicButton();
+    PicButton(QWidget* parent = nullptr);
+    void SetIcons(const QString & normal,
+                  const QString &hover,
+                  const QString& pressed); //常规 悬浮 点击
+protected:
+    bool event(QEvent *e) override;
+    void paintEvent(QPaintEvent *e) override;
+private:
+    void setNormalIcon();
+    void setHoverIcon();
+    void setPressIcon();
+    QString _normal;
+    QString _hover;
+    QString _pressed;
 };
 
 #endif // PICBUTTON_H

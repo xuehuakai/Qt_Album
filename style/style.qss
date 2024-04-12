@@ -80,4 +80,7 @@ PicShow{
 }
 
 
+#nextBtn,#previousBtn{
+    border:0pk;
+}
 
