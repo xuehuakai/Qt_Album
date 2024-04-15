@@ -17,7 +17,7 @@ private:
     //右键单击某个item后弹出菜单
     QTreeWidgetItem * _right_btn_item;
     QTreeWidgetItem * _active_item; //保存当前启动项目（缓存）
-    QTreeWidgetItem * _selected_item;
+    QTreeWidgetItem * _selected_item; //当前选中的项
     QAction * _action_import; //导入动作
     QAction * _action_setstart;
     QAction * _action_closepro;
@@ -29,6 +29,8 @@ private:
     std::shared_ptr<OpenTreeThread> _thread_open_pro;
 public slots:
     void SlotOpenPro(const QString& path ); //在mainwindow中connect的，公有槽
+    void SlotNextShow();
+    void SlotPreShow();
 private slots:
     void SlotItemPressed(QTreeWidgetItem *item, int column);
     void SlotImport();
@@ -42,9 +44,14 @@ private slots:
     void SlotFinishOpenProgress(int count);
     void SlotCancalOpenProgress();
 
+    void SlotDoubleClickItem(QTreeWidgetItem* doubleItem,int col); //column是列数
+
 signals:
     void SigCancelProgress();
     void SigCancelOpenProgress();
+    void SigUpdateSelected(const QString& );
+    void SigUpdatePic(const QString&);
+    void SigClearSelected();
 };
 
 #endif // PROTREEWIDGET_H

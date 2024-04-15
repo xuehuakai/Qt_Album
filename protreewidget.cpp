@@ -27,6 +27,8 @@ ProTreeWidget::ProTreeWidget(QWidget* p) : QTreeWidget(p),_right_btn_item(nullpt
             this,&ProTreeWidget::SlotSetActive);
     connect(_action_closepro,&QAction::triggered,
             this,&ProTreeWidget::SlotClosePro);
+    connect(this,&ProTreeWidget::itemDoubleClicked,
+            this,&ProTreeWidget::SlotDoubleClickItem);
 }
 
 void ProTreeWidget::AddProToTree(const QString &name, const QString &path)
@@ -83,6 +85,35 @@ void ProTreeWidget::SlotOpenPro(const QString &path)
     _open_progressdlg->exec();
 
 
+}
+
+//前后按钮类似于双向链表，之前的函数：getnextitem()
+void ProTreeWidget::SlotNextShow()
+{
+    if(!_selected_item){ //选中的条目为空
+        return;
+    }
+
+    auto * curItem = dynamic_cast<ProTreeItem*>(_selected_item)->getNextItem();
+    if(!curItem) return;
+
+    emit SigUpdatePic(curItem->GetPath()); //告诉picshow我们的图片更新了
+    _selected_item = curItem;
+    this->setCurrentItem(curItem);
+}
+
+void ProTreeWidget::SlotPreShow()
+{
+    if(!_selected_item){ //选中的条目为空
+        return;
+    }
+
+    auto * curItem = dynamic_cast<ProTreeItem*>(_selected_item)->GetPreItem();
+    if(!curItem) return;
+
+    emit SigUpdatePic(curItem->GetPath()); //告诉picshow我们的图片更新了
+    _selected_item = curItem;
+    this->setCurrentItem(curItem);
 }
 
 void ProTreeWidget::SlotItemPressed(QTreeWidgetItem* pressedItem,int column){
@@ -177,7 +208,7 @@ void ProTreeWidget::SlotClosePro()
     bool b_remove = remove_pro_dialog.IsRemoved();
     auto index_right_btn = this->indexOfTopLevelItem(_right_btn_item);
     auto * protreeitem = dynamic_cast<ProTreeItem*>(_right_btn_item);
-//    auto * selecteditem = dynamic_cast<ProTreeItem*>(_selected_item); //选择的状态和右键状态是不一样的
+    auto * selecteditem = dynamic_cast<ProTreeItem*>(_selected_item); //选择的状态和右键状态是不一样的
     auto delete_path = protreeitem->GetPath();
     _set_path.remove(delete_path);
     if(b_remove){
@@ -187,6 +218,12 @@ void ProTreeWidget::SlotClosePro()
 
     if(protreeitem ==  _active_item){
         _active_item = nullptr;
+    }
+
+    if(selecteditem && protreeitem ==selecteditem->GetRoot() ){ //右侧显示图片的根节点恰好是我们关闭的项目
+        selecteditem = nullptr;
+        _selected_item = nullptr;
+        emit SigClearSelected();
     }
 
     delete this->takeTopLevelItem(index_right_btn);
@@ -247,4 +284,20 @@ void ProTreeWidget::SlotCancalOpenProgress()
     emit SigCancelOpenProgress();
     delete _open_progressdlg;
     _open_progressdlg = nullptr;
+}
+
+void ProTreeWidget::SlotDoubleClickItem(QTreeWidgetItem *doubleItem, int col)
+{
+    if(QGuiApplication::mouseButtons() == Qt::LeftButton){
+        auto * tree_doubleItem = dynamic_cast<ProTreeItem*>(doubleItem);
+        if(!tree_doubleItem){
+            return;
+        }
+        int itemtype = tree_doubleItem->type();
+        if(itemtype == TreeItemPic){
+            emit SigUpdateSelected(tree_doubleItem->GetPath()); //发送路径
+            _selected_item =doubleItem; //缓存当前选中的条目
+        }
+
+    }
 }

@@ -31,6 +31,20 @@ PicShow::PicShow(QWidget *parent)
     _animation_show_next->setEasingCurve(QEasingCurve::Linear); //线性
     _animation_show_next->setDuration(500); //500ms 动画时长
 
+    connect(ui->nextBtn,&QPushButton::clicked,this,&PicShow::SigNextClicked);
+    connect(ui->previousBtn,&QPushButton::clicked,this,&PicShow::SigPreClicked);
+
+}
+
+void PicShow::ReloadPic()
+{
+    if(_selected_path != ""){
+        const auto & width  = ui->gridLayout->geometry().width(); //获取layout.width
+        const auto & height = ui->gridLayout->geometry().height();
+        _pix_map.load(_selected_path);
+        _pix_map = _pix_map.scaled(width,height,Qt::KeepAspectRatio);
+        ui->label->setPixmap(_pix_map);
+    }
 }
 
 PicShow::~PicShow()
@@ -86,4 +100,32 @@ void PicShow::ShowPreNextBtns(bool b_show)
         return;
     }
 
+}
+
+void PicShow::SlotSelectItem(const QString &path)
+{
+    _selected_path = path; //更新
+    _pix_map.load(_selected_path);
+    auto width  = this->width() - 20; //margin
+    auto heigth = this->height() - 20;
+    _pix_map = _pix_map.scaled(width,heigth,Qt::KeepAspectRatio); //参数3 为了保持原来图形的比例保持不变
+    ui->label->setPixmap(_pix_map);
+}
+
+void PicShow::SlotUpdatePic(const QString &_path)
+{
+    _selected_path = _path;
+    if(_selected_path != ""){
+        //处理有效路径
+        const auto & width  = ui->gridLayout->geometry().width(); //获取layout.width
+        const auto & height = ui->gridLayout->geometry().height();
+        _pix_map.load(_selected_path);
+        _pix_map = _pix_map.scaled(width,height,Qt::KeepAspectRatio);
+        ui->label->setPixmap(_pix_map);
+    }
+}
+
+void PicShow::SlotDeleteItem()
+{
+    _selected_path = ""; //清空路径
 }

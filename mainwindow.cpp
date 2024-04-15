@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    setMinimumSize(1629,870);
+
     ui->setupUi(this);
 
     //创建菜单
@@ -47,7 +50,19 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     _picshow = new PicShow();
+    auto * pro_pic_show = dynamic_cast<PicShow*>(_picshow);
     ui->picLayout->addWidget(_picshow);
+    connect(pro_tree_widget,&ProTreeWidget::SigUpdateSelected,pro_pic_show,&PicShow::SlotSelectItem);
+
+    connect(pro_pic_show,&PicShow::SigPreClicked,
+            pro_tree_widget,&ProTreeWidget::SlotNextShow); //按钮
+    connect(pro_pic_show,&PicShow::SigPreClicked,
+            pro_tree_widget,&ProTreeWidget::SlotPreShow);
+    //更新图片
+    connect(pro_tree_widget,&ProTreeWidget::SigUpdatePic,
+            pro_pic_show,&PicShow::SlotUpdatePic);
+    connect(pro_tree_widget,&ProTreeWidget::SigClearSelected,
+            pro_pic_show,&PicShow::SlotDeleteItem);
 }
 
 MainWindow::~MainWindow()
@@ -88,4 +103,11 @@ void MainWindow::SlotOpenPro(bool)
 
     QString import_path  = fileNames.at(0);
     emit SigOpenPro(import_path);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    auto * pro_pic_show = dynamic_cast<PicShow*>(_picshow);
+    pro_pic_show->ReloadPic(); //重新加载
+    QMainWindow::resizeEvent(event);
 }
