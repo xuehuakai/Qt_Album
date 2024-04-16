@@ -21,6 +21,7 @@ SOURCES += \
     protreethread.cpp \
     protreewidget.cpp \
     removeprodialog.cpp \
+    slideshowdlg.cpp \
     wizard.cpp
 
 HEADERS += \
@@ -36,6 +37,7 @@ HEADERS += \
     protreethread.h \
     protreewidget.h \
     removeprodialog.h \
+    slideshowdlg.h \
     wizard.h
 
 FORMS += \
@@ -45,6 +47,7 @@ FORMS += \
     prosetpage.ui \
     protree.ui \
     removeprodialog.ui \
+    slideshowdlg.ui \
     wizard.ui
 
 # Default rules for deployment.
