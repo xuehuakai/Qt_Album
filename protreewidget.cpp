@@ -4,6 +4,7 @@
 #include "qfiledialog.h"
 #include "qmenu.h"
 #include"removeprodialog.h"
+#include"slideshowdlg.h"
 #include<QHeaderView>
 #include<QDir>
 #include<QFont>
@@ -29,6 +30,8 @@ ProTreeWidget::ProTreeWidget(QWidget* p) : QTreeWidget(p),_right_btn_item(nullpt
             this,&ProTreeWidget::SlotClosePro);
     connect(this,&ProTreeWidget::itemDoubleClicked,
             this,&ProTreeWidget::SlotDoubleClickItem);
+    connect(_action_slideshow,&QAction::triggered,
+            this,&ProTreeWidget::SlotSlideShow);
 }
 
 void ProTreeWidget::AddProToTree(const QString &name, const QString &path)
@@ -300,4 +303,27 @@ void ProTreeWidget::SlotDoubleClickItem(QTreeWidgetItem *doubleItem, int col)
         }
 
     }
+}
+
+void ProTreeWidget::SlotSlideShow()
+{
+    if(!_right_btn_item){
+        return;
+    }
+
+    auto * right_pro_item = dynamic_cast<ProTreeItem*>(_right_btn_item) ;//变成真实类型
+    auto * last_child_item = right_pro_item->GetLastPicChild();
+    if(!last_child_item){
+        return;
+    }
+    auto * first_child_item = right_pro_item->GetFirstPicChild();
+    if(!first_child_item){
+        return;
+    }
+
+    _slide_show_dlg = std::make_shared<SlideShowDlg>(this,
+                                                     first_child_item,last_child_item);
+    _slide_show_dlg->setModal(true); //模态
+    _slide_show_dlg->showMaximized();
+
 }

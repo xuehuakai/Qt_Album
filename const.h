@@ -11,6 +11,17 @@ enum TreeItemType{
     TreeItemPic = 3, //表示项目的图片 --文件
 };
 
+enum PicBtnState{
+    PicBtnStateNormal = 1, //播放图标
+    PicBtnStateHover = 2,
+    PicBtnStatePress = 3,
+
+    PicBtnState2Normal = 4, //暂停图标
+    PicBtnState2Hover = 5,
+    PicBtnState2Press = 6,
+
+};
+
 
 //定义固定长度
 const int PROGRESS_WIDTH = 300;

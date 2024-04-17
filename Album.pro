@@ -15,6 +15,7 @@ SOURCES += \
     opentreethread.cpp \
     picbutton.cpp \
     picshow.cpp \
+    picstatebtn.cpp \
     prosetpage.cpp \
     protree.cpp \
     protreeitem.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     opentreethread.h \
     picbutton.h \
     picshow.h \
+    picstatebtn.h \
     prosetpage.h \
     protree.h \
     protreeitem.h \

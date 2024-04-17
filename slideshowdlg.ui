@@ -18,7 +18,7 @@
     <widget class="QWidget" name="slideShow" native="true">
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="0">
-       <widget class="QWidget" name="slidprewid" native="true">
+       <widget class="QWidget" name="slideprewid" native="true">
         <property name="minimumSize">
          <size>
           <width>80</width>
@@ -33,9 +33,9 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QPushButton" name="slidepreBtn">
+          <widget class="PicButton" name="slidepreBtn">
            <property name="text">
-            <string>前一个</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -61,9 +61,9 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QPushButton" name="slidenextBtn">
+          <widget class="PicButton" name="slidenextBtn">
            <property name="text">
-            <string>后一个</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -73,14 +73,14 @@
       <item row="0" column="2">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QPushButton" name="playBtn">
+         <widget class="PicStateBtn" name="playBtn">
           <property name="text">
            <string>播放</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="closeBtn">
+         <widget class="PicButton" name="closeBtn">
           <property name="text">
            <string>关闭</string>
           </property>
@@ -136,9 +136,19 @@
     </widget>
    </item>
   </layout>
-  <zorder>slideShow</zorder>
-  <zorder>preShow</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PicButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">picbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PicStateBtn</class>
+   <extends>QPushButton</extends>
+   <header location="global">picstatebtn.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

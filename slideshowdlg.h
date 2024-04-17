@@ -12,12 +12,14 @@ class SlideShowDlg : public QDialog
     Q_OBJECT
 
 public:
-    explicit SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
-                          QTreeWidgetItem* last_item);
+    explicit SlideShowDlg(QWidget *parent = nullptr,QTreeWidgetItem* first_item = nullptr,
+                          QTreeWidgetItem* last_item = nullptr);
     ~SlideShowDlg();
 
 private:
     Ui::SlideShowDlg *ui;
+    QTreeWidgetItem * _first_item;
+    QTreeWidgetItem * _last_item;
 };
 
 #endif // SLIDESHOWDLG_H

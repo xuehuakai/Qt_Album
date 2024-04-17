@@ -3,9 +3,13 @@
 
 #include "opentreethread.h"
 #include "protreethread.h"
+
 #include <QTreeWidget>
 #include<QProgressDialog>
 #include<QAction>
+
+class SlideShowDlg;
+
 class ProTreeWidget : public QTreeWidget
 {
     Q_OBJECT
@@ -27,6 +31,8 @@ private:
 
     std::shared_ptr<ProTreeThread> _thread_create_pro ;
     std::shared_ptr<OpenTreeThread> _thread_open_pro;
+
+    std::shared_ptr<SlideShowDlg> _slide_show_dlg;
 public slots:
     void SlotOpenPro(const QString& path ); //在mainwindow中connect的，公有槽
     void SlotNextShow();
@@ -45,7 +51,7 @@ private slots:
     void SlotCancalOpenProgress();
 
     void SlotDoubleClickItem(QTreeWidgetItem* doubleItem,int col); //column是列数
-
+    void SlotSlideShow();
 signals:
     void SigCancelProgress();
     void SigCancelOpenProgress();
