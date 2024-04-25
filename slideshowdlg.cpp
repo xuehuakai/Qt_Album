@@ -26,6 +26,9 @@ SlideShowDlg::SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
                           ":/icon/pause.png",
                           ":/icon/pause_hover.png",
                           ":/icon/pause_press.png");
+
+    ui->picAnimation->SetPixmap(_first_item);
+    ui->picAnimation->Start();
 }
 
 SlideShowDlg::~SlideShowDlg()

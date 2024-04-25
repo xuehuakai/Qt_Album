@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     opentreethread.cpp \
+    picanimationwid.cpp \
     picbutton.cpp \
     picshow.cpp \
     picstatebtn.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     const.h \
     mainwindow.h \
     opentreethread.h \
+    picanimationwid.h \
     picbutton.h \
     picshow.h \
     picstatebtn.h \
