@@ -24,6 +24,9 @@ private:
     bool _b_start;
 private slots:
     void TimeOut();
+signals:
+    void SigUpPreList(QTreeWidgetItem * ); //通知下方缩略图
+    void SigSelectItem(QTreeWidgetItem * ); //更新预览窗口item选中状态
 
 };
 

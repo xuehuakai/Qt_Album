@@ -27,7 +27,17 @@ SlideShowDlg::SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
                           ":/icon/pause_hover.png",
                           ":/icon/pause_press.png");
 
+     auto * prelistwid = dynamic_cast<PreListWid*>(ui->preListWidget);
+    connect(ui->picAnimation,&PicAnimationWid::SigUpPreList,
+            prelistwid,&PreListWid::SlotUpPreList);
+     connect(ui->picAnimation,&PicAnimationWid::SigSelectItem,
+             prelistwid,&PreListWid::SlotUpSelect);
+    connect(ui->closeBtn,&QPushButton::clicked,
+            this,&SlideShowDlg::close);
     ui->picAnimation->SetPixmap(_first_item);
+
+
+
     ui->picAnimation->Start();
 }
 

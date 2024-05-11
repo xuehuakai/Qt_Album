@@ -108,7 +108,7 @@
           <height>120</height>
          </size>
         </property>
-        <widget class="QListWidget" name="preListWidget">
+        <widget class="PreListWid" name="preListWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -153,6 +153,11 @@
    <extends>QWidget</extends>
    <header>picanimationwid.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PreListWid</class>
+   <extends>QListWidget</extends>
+   <header location="global">prelistwid.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

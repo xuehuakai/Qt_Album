@@ -26,3 +26,6 @@ enum PicBtnState{
 //定义固定长度
 const int PROGRESS_WIDTH = 300;
 const int PROGRESS_MAX = 300;
+
+const int PREITEM_SIZE = 100;
+const int PREICON_SIZE = 90; //尽让图片（预览的icon）平铺时小一点

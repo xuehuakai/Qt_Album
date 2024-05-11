@@ -29,8 +29,10 @@ void PicAnimationWid::SetPixmap(QTreeWidgetItem *item)
     if(_map_item.find(path) == _map_item.end()){
         _map_item[path] = tree_item;
         //发送更新列表逻辑
-
+        emit SigUpPreList(item); //先更新当前的Item 再更新后面的item 因为是双缓冲绘图
     }
+
+    emit SigSelectItem(item);
 
     auto * next_item = tree_item->getNextItem();
     if(!next_item){
@@ -43,6 +45,7 @@ void PicAnimationWid::SetPixmap(QTreeWidgetItem *item)
     if(_map_item.find(next_path) == _map_item.end()){
         _map_item[next_path]=next_item;
         //发送更新列表逻辑
+        emit SigUpPreList(next_item);
     }
 }
 
