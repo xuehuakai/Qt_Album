@@ -1,4 +1,5 @@
 #include "slideshowdlg.h"
+#include "protreewidget.h"
 #include "ui_slideshowdlg.h"
 
 SlideShowDlg::SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
@@ -30,13 +31,37 @@ SlideShowDlg::SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
      auto * prelistwid = dynamic_cast<PreListWid*>(ui->preListWidget);
     connect(ui->picAnimation,&PicAnimationWid::SigUpPreList,
             prelistwid,&PreListWid::SlotUpPreList);
-     connect(ui->picAnimation,&PicAnimationWid::SigSelectItem,
+    connect(ui->picAnimation,&PicAnimationWid::SigSelectItem,
              prelistwid,&PreListWid::SlotUpSelect);
+
+
+    connect(ui->slidenextBtn,&QPushButton::clicked,
+            this,&SlideShowDlg::SlotSlideNext);
+    connect(ui->slidepreBtn,&QPushButton::clicked,
+            this,&SlideShowDlg::SlotSlidePre);
+    connect(prelistwid,&PreListWid::SigUpSelect,
+            ui->picAnimation,&PicAnimationWid::SlotUpSelect);
+
     connect(ui->closeBtn,&QPushButton::clicked,
             this,&SlideShowDlg::close);
+    connect(ui->playBtn,&PicStateBtn::clicked,ui->picAnimation,
+            &PicAnimationWid::SlotStartOrStop);
+
+    connect(ui->picAnimation,&PicAnimationWid::SigStart,
+           ui->playBtn,&PicStateBtn::SlotStart);
+    connect(ui->picAnimation,&PicAnimationWid::SigStop,
+           ui->playBtn,&PicStateBtn::SlotStop);
+
+    auto * _protree_widget = dynamic_cast<ProTreeWidget*>(parent);
+
+
+
+    connect(ui->picAnimation,&PicAnimationWid::SigStartMusic,
+            _protree_widget,&ProTreeWidget::SlotStartMusic);
+
+    connect(ui->picAnimation,&PicAnimationWid::SigStopMusic,
+            _protree_widget,&ProTreeWidget::SlotStopMusic);
     ui->picAnimation->SetPixmap(_first_item);
-
-
 
     ui->picAnimation->Start();
 }
@@ -44,4 +69,14 @@ SlideShowDlg::SlideShowDlg(QWidget *parent,QTreeWidgetItem* first_item,
 SlideShowDlg::~SlideShowDlg()
 {
     delete ui;
+}
+
+void SlideShowDlg::SlotSlideNext()
+{
+    ui->picAnimation->SlideNext();
+}
+
+void SlideShowDlg::SlotSlidePre()
+{
+    ui->picAnimation->SlidePre();
 }

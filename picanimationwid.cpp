@@ -51,6 +51,8 @@ void PicAnimationWid::SetPixmap(QTreeWidgetItem *item)
 
 void PicAnimationWid::Start()
 {
+    emit SigStart(); //通知slideshow界面
+    emit SigStartMusic();
     _factor = 0;
     _timer->start(25);
     _b_start = true;
@@ -58,9 +60,35 @@ void PicAnimationWid::Start()
 
 void PicAnimationWid::Stop()
 {
+    emit SigStop();
+    emit SigStopMusic();
     _timer->stop();
     _factor=0;
     _b_start = false;
+}
+
+void PicAnimationWid::SlideNext()
+{
+    Stop();
+    if(!_cur_item) return;
+    auto * cur_pro_item = dynamic_cast<ProTreeItem*>(_cur_item);
+    auto * next_item = cur_pro_item->getNextItem();
+    if(!next_item) return;
+    SetPixmap(next_item);
+    update(); //刷新一下  图片才会显示出来
+    Start();
+}
+
+void PicAnimationWid::SlidePre()
+{
+    Stop();
+    if(!_cur_item) return;
+    auto * cur_pro_item = dynamic_cast<ProTreeItem*>(_cur_item);
+    auto * pre_item = cur_pro_item->GetPreItem();
+    if(!pre_item) return;
+    SetPixmap(pre_item);
+    update(); //刷新一下  图片才会显示出来
+    Start();
 }
 
 void PicAnimationWid::paintEvent(QPaintEvent *event)
@@ -123,6 +151,56 @@ void PicAnimationWid::paintEvent(QPaintEvent *event)
     painter.drawPixmap(x,y,alphaPixmap2);
 }
 
+void PicAnimationWid::UpSelectPixmap(QTreeWidgetItem *item) //更新缩略图选择的图片
+{
+    // if(!item) return;
+    // auto * tree_item = dynamic_cast<ProTreeItem*>(item);
+    // auto path = tree_item->GetPath();
+    // _pixmap1.load(path);
+    // _cur_item = tree_item;
+
+    // if(_map_item.find(path) == _map_item.end()){
+    //     _map_item[path] = tree_item;
+    // }
+    // auto * next_item = tree_item->getNextItem();
+
+    // if(!next_item) return;
+
+    // auto next_path = tree_item->GetPath();
+    // _pixmap2.load(next_path);
+
+    // if(_map_item.find(next_path) == _map_item.end()){
+    //     _map_item[next_path] = next_item;
+    // }
+    SetPixmap(item);
+}
+
+void PicAnimationWid::SlotUpSelect(const QString &path)
+{
+    auto iter = _map_item.find(path);
+    if(iter == _map_item.end()){
+        return;
+    }
+    UpSelectPixmap(iter.value());
+    update();
+}
+
+void PicAnimationWid::SlotStartOrStop()
+{
+    if(!_b_start){ //非开始状态
+        _factor = 0;
+        _timer->start(25);
+        _b_start = true;
+        emit SigStartMusic();
+    }else{
+        _timer->stop();
+        _factor = 0;
+        update();
+        _b_start = false;
+        emit SigStopMusic();
+    }
+}
+
 
 void PicAnimationWid::TimeOut()
 {
@@ -150,3 +228,5 @@ void PicAnimationWid::TimeOut()
 
     update();
 }
+
+

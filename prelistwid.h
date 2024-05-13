@@ -7,6 +7,7 @@
 #include<QTreeWidgetItem>
 class PreListWid : public QListWidget
 {
+    Q_OBJECT
 private:
     QMap<QString,QListWidgetItem*> _set_items; //path - item
     void AddListItem(const QString& path);
@@ -20,6 +21,9 @@ public:
 public slots:
     void SlotUpPreList(QTreeWidgetItem* tree_item);
     void SlotUpSelect(QTreeWidgetItem* tree_item);
+    void SlotItemPressed(QListWidgetItem * item);
+signals:
+    void SigUpSelect(const  QString &  path);
 };
 
 #endif // PRELISTWID_H

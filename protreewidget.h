@@ -7,7 +7,8 @@
 #include <QTreeWidget>
 #include<QProgressDialog>
 #include<QAction>
-
+#include<QtMultimedia/QMediaPlayer>
+#include<QAudioOutput>
 class SlideShowDlg;
 
 class ProTreeWidget : public QTreeWidget
@@ -33,10 +34,16 @@ private:
     std::shared_ptr<OpenTreeThread> _thread_open_pro;
 
     std::shared_ptr<SlideShowDlg> _slide_show_dlg;
+
+    QMediaPlayer * _player;
+    QAudioOutput * _output;
 public slots:
     void SlotOpenPro(const QString& path ); //在mainwindow中connect的，公有槽
     void SlotNextShow();
     void SlotPreShow();
+    void SlotSetMusic();
+    void SlotStartMusic();
+    void SlotStopMusic();
 private slots:
     void SlotItemPressed(QTreeWidgetItem *item, int column);
     void SlotImport();

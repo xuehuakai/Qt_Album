@@ -56,6 +56,8 @@ bool PicStateBtn::event(QEvent *e)
             setHoverIcon();
         }
         break;
+    default:
+        break;
     }
 
     return QPushButton::event(e);
@@ -107,4 +109,14 @@ void PicStateBtn::setPress2Icon()
     tmpPixmap.load(_pressed_2);
     this->setIcon(tmpPixmap);
     _cur_state = PicBtnState2Press;
+}
+
+void PicStateBtn::SlotStart()
+{
+    setNormal2Icon();
+}
+
+void PicStateBtn::SlotStop()
+{
+    setNormalIcon();
 }

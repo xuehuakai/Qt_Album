@@ -35,6 +35,10 @@ private:
     QString _pressed_2;
 
     int _cur_state; //记录暂停播放状态
+
+public slots:
+    void SlotStart();
+    void SlotStop();
 };
 
 #endif // PICSTATEBTN_H

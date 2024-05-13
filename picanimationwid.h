@@ -12,6 +12,8 @@ public:
     void SetPixmap(QTreeWidgetItem * item); //从哪个文件开始播
     void Start();
     void Stop();
+    void SlideNext();
+    void SlidePre();
 protected:
        virtual void paintEvent(QPaintEvent *event);
 private:
@@ -22,12 +24,20 @@ private:
     QTreeWidgetItem * _cur_item;
     QMap<QString,QTreeWidgetItem*> _map_item; //只处理新的
     bool _b_start;
+
+    void UpSelectPixmap(QTreeWidgetItem * item);
+public slots:
+    void SlotUpSelect(const QString & path);
+     void SlotStartOrStop();
 private slots:
     void TimeOut();
 signals:
     void SigUpPreList(QTreeWidgetItem * ); //通知下方缩略图
     void SigSelectItem(QTreeWidgetItem * ); //更新预览窗口item选中状态
-
+    void SigStart();
+    void SigStop();
+    void SigStartMusic();
+    void SigStopMusic();
 };
 
 #endif // PICANIMATIONWID_H
